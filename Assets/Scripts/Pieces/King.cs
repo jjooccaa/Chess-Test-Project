@@ -7,72 +7,101 @@ public class King : Piece
     {
         List<Vector2Int> r = new List<Vector2Int>();
 
-        // front
-        if(currentY + 1 < tileCountY)
+        // Right
+        if(currentX + 1 <tileCountX)
         {
-            if(board[currentX, currentY + 1] == null)
+            //Right
+            if(board[currentX + 1, currentY] == null)
             {
-                r.Add(new Vector2Int(currentX,currentY + 1));
-            }
-            if(board[currentX, currentY + 1] != null)
-            {
-                if(board[currentX, currentY + 1].team != team)
-                {
-                    r.Add(new Vector2Int(currentX, currentY + 1));
-                }
-                
-            }
-        }
-
-        // bottom
-        if (currentY - 1 >= 0)
-        {
-            if (board[currentX, currentY - 1] == null)
-            {
-                r.Add(new Vector2Int(currentX, currentY - 1));
-            }
-            if (board[currentX, currentY - 1] != null)
-            {
-                if (board[currentX, currentY - 1].team != team)
-                {
-                    r.Add(new Vector2Int(currentX, currentY - 1));
-                }
-
-            }
-        }
-        // right
-        if (currentX + 1 < tileCountX)
-        {
-            if (board[currentX + 1, currentY] == null)
+                r.Add(new Vector2Int(currentX + 1, currentY));
+            } else if(board[currentX + 1, currentY].team != team)
             {
                 r.Add(new Vector2Int(currentX + 1, currentY));
             }
-            if (board[currentX + 1, currentY] != null)
-            {
-                if (board[currentX + 1, currentY].team != team)
-                {
-                    r.Add(new Vector2Int(currentX + 1, currentY));
-                }
 
+            //Top Right
+            if(currentY + 1 < tileCountY)
+            {
+                if (board[currentX + 1, currentY + 1] == null)
+                {
+                    r.Add(new Vector2Int(currentX + 1, currentY + 1));
+                }
+                else if (board[currentX + 1, currentY + 1].team != team)
+                {
+                    r.Add(new Vector2Int(currentX + 1, currentY + 1));
+                }
+            }
+            //Bottom Right
+            if (currentY - 1 >= 0 )
+            {
+                if (board[currentX + 1, currentY - 1] == null)
+                {
+                    r.Add(new Vector2Int(currentX + 1, currentY - 1));
+                }
+                else if (board[currentX + 1, currentY - 1].team != team)
+                {
+                    r.Add(new Vector2Int(currentX + 1, currentY - 1));
+                }
             }
         }
 
-        // left
+        // Left
         if (currentX - 1 >= 0)
         {
+            //Left
             if (board[currentX - 1, currentY] == null)
             {
                 r.Add(new Vector2Int(currentX - 1, currentY));
             }
-            if (board[currentX - 1, currentY] != null)
+            else if (board[currentX - 1, currentY].team != team)
             {
-                if (board[currentX - 1, currentY].team != team)
-                {
-                    r.Add(new Vector2Int(currentX - 1, currentY));
-                }
+                r.Add(new Vector2Int(currentX - 1, currentY));
+            }
 
+            //Top Right
+            if (currentY + 1 < tileCountY)
+            {
+                if (board[currentX - 1, currentY + 1] == null)
+                {
+                    r.Add(new Vector2Int(currentX - 1, currentY + 1));
+                }
+                else if (board[currentX - 1, currentY + 1].team != team)
+                {
+                    r.Add(new Vector2Int(currentX - 1, currentY + 1));
+                }
+            }
+            //Bottom Right
+            if (currentY - 1 >= 0)
+            {
+                if (board[currentX - 1, currentY - 1] == null)
+                {
+                    r.Add(new Vector2Int(currentX - 1, currentY - 1));
+                }
+                else if (board[currentX - 1, currentY - 1].team != team)
+                {
+                    r.Add(new Vector2Int(currentX - 1, currentY - 1));
+                }
             }
         }
+
+        // Up
+        if(currentY + 1 < tileCountY)
+        {
+            if(board[currentX, currentY + 1] == null || board[currentX, currentY + 1].team != team)
+            {
+                r.Add(new Vector2Int(currentX, currentY + 1));
+            }
+        }
+
+        // Down
+        if (currentY - 1 >= 0)
+        {
+            if (board[currentX, currentY - 1] == null || board[currentX, currentY - 1].team != team)
+            {
+                r.Add(new Vector2Int(currentX, currentY - 1));
+            }
+        }
+
         return r;
     }
 }

@@ -13,6 +13,7 @@ public class Chessboard : MonoBehaviour
     [SerializeField] private float deathSize = 0.3f;
     [SerializeField] private float deathSpacing = 0.3f;
     [SerializeField] private float dragOffset = 1.0f;
+    [SerializeField] private GameObject victoryScreen;
 
     [Header("Prefabs & Materials")]
     [SerializeField] private GameObject[] prefabs;
@@ -284,6 +285,25 @@ public class Chessboard : MonoBehaviour
         availableMoves.Clear(); // clear all available moves from list
     }
 
+    // Checkmate
+    private void CheckMate(int team)
+    {
+        DisplayVictory(team);
+    }
+    private void DisplayVictory(int winningTeam)
+    {
+        victoryScreen.SetActive(true);
+        victoryScreen.transform.GetChild(winningTeam).gameObject.SetActive(true);
+    }
+    public void OnResetButton()
+    {
+
+    }
+    public void OnExitButton()
+    {
+        Application.Quit();
+    }
+
     // Operations
     private bool ContainsValidMove(ref List<Vector2Int> moves, Vector2 pos)
     {
@@ -322,6 +342,11 @@ public class Chessboard : MonoBehaviour
             // If its the enemy team
             if (otherP.team == 0) // white team
             {
+                if(otherP.type == ChessPieceType.King)
+                {
+                    CheckMate(1);
+                }
+
                 deadWhites.Add(otherP);
                 otherP.SetScale(Vector3.one * deathSize); // set scale of piece when it dies
                 otherP.SetPosition(new Vector3(8 * tileSize, yOffset, -1 * tileSize) // move it 8 tiles outside the borad
@@ -331,6 +356,10 @@ public class Chessboard : MonoBehaviour
             }
             else // black team
             {
+                if (otherP.type == ChessPieceType.King)
+                {
+                    CheckMate(0);
+                }
                 deadBlacks.Add(otherP);
                 otherP.SetScale(Vector3.one * deathSize); // set scale of piece when it dies
                 otherP.SetPosition(new Vector3(-1 * tileSize, yOffset, 8 * tileSize) // move pieces to right border of board
