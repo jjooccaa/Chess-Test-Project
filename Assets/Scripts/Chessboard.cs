@@ -301,7 +301,7 @@ public class Chessboard : MonoBehaviour
     }
     public void OnExitButton()
     {
-        Application.Quit();
+        Application.Quit(); //Exit game 
     }
 
     // Operations
