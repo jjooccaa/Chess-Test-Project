@@ -233,7 +233,7 @@ public class Chessboard : MonoBehaviour
 
         p.type = type;
         p.team = team;
-        p.GetComponent<MeshRenderer>().material = teamMaterials[team];
+        p.GetComponent<MeshRenderer>().material = teamMaterials[((team == 0) ? 0 : 6) + ((int)type - 1)];
 
         return p;
     }
@@ -297,6 +297,45 @@ public class Chessboard : MonoBehaviour
     }
     public void OnResetButton()
     {
+        // reset ui
+        victoryScreen.transform.GetChild(0).gameObject.SetActive(false);
+        victoryScreen.transform.GetChild(1).gameObject.SetActive(false);
+        victoryScreen.SetActive(false);
+
+        // Reset fields
+        currentlyDragging = null;
+        availableMoves = new List<Vector2Int>();
+
+        // Clean up
+        for (int x = 0; x < TILE_COUNT_X; x++)
+        {
+            for(int y = 0; y < TILE_COUNT_Y; y++)
+            {
+                if(chessPieces[x,y] != null)
+                {
+                    Destroy(chessPieces[x,y].gameObject);
+                }
+
+                chessPieces[x, y] = null;
+            }
+        }
+
+        for (int i = 0; i < deadWhites.Count; i++)
+        {
+            Destroy(deadWhites[i].gameObject);
+        }
+        for(int i = 0; i < deadBlacks.Count; i++)
+        {
+            Destroy(deadBlacks[i].gameObject);
+        }
+
+        deadWhites.Clear();
+        deadBlacks.Clear();
+
+        // Spawn all pieces, white team has first turn
+        SpawnAllPieces();
+        PositionAllPieces();
+        isWhiteTurn = true;
 
     }
     public void OnExitButton()
