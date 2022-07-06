@@ -35,18 +35,21 @@ public class Pawn : Piece
         }
 
         // Kill move
-        if(currentX != tileCountX-1)
+        if (currentX != tileCountX - 1)
         {
-            if(board[currentX + 1, currentY + direction] != null && board[currentX + 1, currentY + direction].team != team)
+            if (board[currentX + 1, currentY + direction] != null && board[currentX + 1, currentY + direction].team != team)
             {
                 r.Add(new Vector2Int(currentX + 1, currentY + direction));
             }
+        }
+        if (currentX != 0)
+        {
             if (board[currentX - 1, currentY + direction] != null && board[currentX - 1, currentY + direction].team != team)
             {
                 r.Add(new Vector2Int(currentX - 1, currentY + direction));
             }
         }
-
+        
 
         return r;
     }
